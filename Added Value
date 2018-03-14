@@ -1,1 +1,129 @@
-// Almost everything was altered or added to the code that I referenced
+// Both the declaration of variables and the set up are very basic things. I did have to add many more
+// variables and outputs/inputs, but these are basic things that are in every tutorial online. The
+// rest of the code has some similarities to the reference code, but everything had to be altered in 
+// order to work for me, so I consider all of it to be added value. Also I combined 2 different chips 
+// into one working code, which I believe is added value.
+
+void loop() {
+
+ // Serial.println(mic1constant);
+  long VibrateValue = pulseIn(Vibrate1, LOW);
+  // Serial.println(VibrateValue);
+  mic1constant = analogRead(Mic);
+  delay(1);
+  MicrophoneValue1 = analogRead(Mic);
+  //Serial.println(MicrophoneValue1);
+  mic2constant = analogRead(Mic2);
+  delay(1);
+  MicrophoneValue2 = analogRead(Mic2);
+
+  // Serial.println(MicrophoneValue2);'
+  //Serial.println(VibrateValue);
+  // Testing the Vibration ///////
+
+  if (VibrateValue > 0) {
+    digitalWrite(VibrateLed1, HIGH);
+    delay(10);
+  }
+  else {
+    digitalWrite(VibrateLed1, LOW);
+  }
+  if (VibrateValue >= 20000) {
+    digitalWrite(VibrateLed2, HIGH);
+    delay(10);
+  }
+  else {
+    digitalWrite(VibrateLed2, LOW);
+  }
+  if (VibrateValue >= 40000) {
+    digitalWrite(VibrateLed3, HIGH);
+    delay(10);
+  }
+  else {
+    digitalWrite(VibrateLed3, LOW);
+  }
+
+
+
+
+
+  // Testing the Audio 1 /////////
+
+  //one light
+  if (MicrophoneValue1 > (mic1constant + 2)) {
+    digitalWrite(Audio1Led2, HIGH);
+    delay(10);
+  }
+  else {
+    digitalWrite(Audio1Led2, LOW);
+  }
+
+  //two lights
+  if (MicrophoneValue1 > (mic1constant + 6)) {
+
+    digitalWrite(Audio1Led3, HIGH);
+    delay(10);
+  }
+  else {
+
+    digitalWrite(Audio1Led3, LOW);
+  }
+
+  //three lights
+  if (MicrophoneValue1 > (mic1constant + 13)) {
+    digitalWrite(Audio1Led4, HIGH);
+    delay(10);
+  }
+  else {
+    digitalWrite(Audio1Led4, LOW);
+  }
+
+  //all lights
+  if (MicrophoneValue1 > (mic1constant + 21)) {
+    digitalWrite(Audio1Led5, HIGH);
+    delay(10);
+  }
+  else {
+    digitalWrite(Audio1Led5, LOW);
+  }
+
+  //Second light (different method?)/////
+
+  if (MicrophoneValue2 < (mic2constant - 1)) {
+    digitalWrite(Audio2Led1, HIGH);
+    delay(10);
+  }
+  else {
+    digitalWrite(Audio2Led1, LOW);
+  }
+
+  if (MicrophoneValue2 < (mic2constant - 3)) {
+    digitalWrite(Audio2Led2, HIGH);
+    delay(10);
+  }
+  else {
+
+    digitalWrite(Audio2Led2, LOW);
+  }
+
+  if (MicrophoneValue2 < (mic2constant - 5)) {
+    digitalWrite(Audio2Led3, HIGH);
+    delay(10);
+  }
+  else {
+
+    digitalWrite(Audio2Led3, LOW);
+  }
+
+  if (MicrophoneValue2 < (mic2constant - 10)) {
+    digitalWrite(Audio2Led4, HIGH);
+    delay(10);
+  }
+  else {
+    digitalWrite(Audio2Led4, LOW);
+
+  }
+
+}
+
+
