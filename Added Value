@@ -2,128 +2,244 @@
 // variables and outputs/inputs, but these are basic things that are in every tutorial online. The
 // rest of the code has some similarities to the reference code, but everything had to be altered in 
 // order to work for me, so I consider all of it to be added value. Also I combined 2 different chips 
-// into one working code, which I believe is added value.
+// into one working code, which I believe is added value. I different inputs and used new way to display
+// the changes in noise
 
-void loop() {
+long VibrateValue = pulseIn(Vibrate1, LOW);
 
- // Serial.println(mic1constant);
-  long VibrateValue = pulseIn(Vibrate1, LOW);
-  // Serial.println(VibrateValue);
+  // MIC
   mic1constant = analogRead(Mic);
   delay(1);
   MicrophoneValue1 = analogRead(Mic);
-  //Serial.println(MicrophoneValue1);
+  Serial.println(MicrophoneValue1);
   mic2constant = analogRead(Mic2);
   delay(1);
   MicrophoneValue2 = analogRead(Mic2);
 
-  // Serial.println(MicrophoneValue2);'
+  //Serial.println(MicrophoneValue2);
   //Serial.println(VibrateValue);
   // Testing the Vibration ///////
 
-  if (VibrateValue > 0) {
-    digitalWrite(VibrateLed1, HIGH);
-    delay(10);
+  if (VibrateValue > 0 && VibrateValue < 1000) {
+    digitalWrite(fan1, HIGH);
+    delay(100);
   }
   else {
-    digitalWrite(VibrateLed1, LOW);
-  }
-  if (VibrateValue >= 20000) {
-    digitalWrite(VibrateLed2, HIGH);
-    delay(10);
-  }
-  else {
-    digitalWrite(VibrateLed2, LOW);
-  }
-  if (VibrateValue >= 40000) {
-    digitalWrite(VibrateLed3, HIGH);
-    delay(10);
-  }
-  else {
-    digitalWrite(VibrateLed3, LOW);
+    if (VibrateValue >= 1000 && VibrateValue < 4000) {
+      digitalWrite(fan1, HIGH);
+      digitalWrite(fan2, HIGH);
+      delay(100);
+    }
+    else {
+      if (VibrateValue >= 4000) {
+        digitalWrite(fan1, HIGH);
+        digitalWrite(fan2, HIGH);
+        digitalWrite(fan3, HIGH);
+        delay(100);
+      }
+      else {
+        digitalWrite(fan1, LOW);
+        digitalWrite(fan2, LOW);
+        digitalWrite(fan3, LOW);
+      }
+    }
   }
 
 
 
-
+  //////////////////////////////////////////////////////////////////////////////////////////
 
   // Testing the Audio 1 /////////
+  if (MicrophoneValue1 > mic1constant) {
+    //one laser
+    if (MicrophoneValue1 >= (mic1constant + 2) && MicrophoneValue1 < (mic1constant + 10)) {
+      digitalWrite(laser1, HIGH);
+      delay(10);
+    }
+    else {
 
-  //one light
-  if (MicrophoneValue1 > (mic1constant + 2)) {
-    digitalWrite(Audio1Led2, HIGH);
-    delay(10);
+      //two lasers
+      if (MicrophoneValue1 >= (mic1constant + 10) && MicrophoneValue1 < (mic1constant + 20)) {
+        digitalWrite(laser1, HIGH);
+        digitalWrite(laser2, HIGH);
+        delay(10);
+      }
+      else {
+
+        //three lasers
+        if (MicrophoneValue1 >= (mic1constant + 20) && MicrophoneValue1 < (mic1constant + 43)) {
+          digitalWrite(laser1, HIGH);
+          digitalWrite(laser2, HIGH);
+          digitalWrite(laser3, HIGH);
+          delay(10);
+        }
+        else {
+
+          //4 lasers
+          if (MicrophoneValue1 >= (mic1constant + 38) && MicrophoneValue1 < (mic1constant + 38)) {
+            digitalWrite(laser1, HIGH);
+            digitalWrite(laser2, HIGH);
+            digitalWrite(laser3, HIGH);
+            digitalWrite(laser4, HIGH);
+            delay(10);
+          }
+          else {
+
+            //all lasers
+            if (MicrophoneValue1 >= (mic1constant + 75)) {
+              digitalWrite(laser1, HIGH);
+              digitalWrite(laser2, HIGH);
+              digitalWrite(laser3, HIGH);
+              digitalWrite(laser4, HIGH);
+              digitalWrite(laser5, HIGH);
+              delay(10);
+            }
+            else {
+              digitalWrite(laser1, LOW);
+              digitalWrite(laser2, LOW);
+              digitalWrite(laser3, LOW);
+              digitalWrite(laser4, LOW);
+              digitalWrite(laser5, LOW);
+              delay(10);
+
+            }
+          }
+        }
+      }
+    }
   }
   else {
-    digitalWrite(Audio1Led2, LOW);
+    if (MicrophoneValue1 <= (mic1constant - 2) && MicrophoneValue1 > (mic1constant - 10)) {
+      digitalWrite(laser1, HIGH);
+      delay(10);
+    }
+    else {
+
+      //two lasers
+      if (MicrophoneValue1 <= (mic1constant - 10) && MicrophoneValue1 > (mic1constant - 20)) {
+        digitalWrite(laser1, HIGH);
+        digitalWrite(laser2, HIGH);
+        delay(10);
+      }
+      else {
+
+        //three lasers
+        if (MicrophoneValue1 <= (mic1constant - 20) && MicrophoneValue1 > (mic1constant - 38)) {
+          digitalWrite(laser1, HIGH);
+          digitalWrite(laser2, HIGH);
+          digitalWrite(laser3, HIGH);
+          delay(10);
+        }
+        else {
+
+          //4 lasers
+          if (MicrophoneValue1 <= (mic1constant - 38) && MicrophoneValue1 > (mic1constant - 75)) {
+            digitalWrite(laser1, HIGH);
+            digitalWrite(laser2, HIGH);
+            digitalWrite(laser3, HIGH);
+            digitalWrite(laser4, HIGH);
+            delay(10);
+          }
+          else {
+
+            //all lasers
+            if (MicrophoneValue1 <= (mic1constant - 75)) {
+              digitalWrite(laser1, HIGH);
+              digitalWrite(laser2, HIGH);
+              digitalWrite(laser3, HIGH);
+              digitalWrite(laser4, HIGH);
+              digitalWrite(laser5, HIGH);
+              delay(10);
+            }
+            else {
+              digitalWrite(laser1, LOW);
+              digitalWrite(laser2, LOW);
+              digitalWrite(laser3, LOW);
+              digitalWrite(laser4, LOW);
+              digitalWrite(laser5, LOW);
+              delay(10);
+
+            }
+          }
+        }
+      }
+    }
   }
 
-  //two lights
-  if (MicrophoneValue1 > (mic1constant + 6)) {
+  //////////////////////////////////////////////////////////////////////////////////////////
 
-    digitalWrite(Audio1Led3, HIGH);
-    delay(10);
+
+
+  //  //Second light /////
+
+  if (MicrophoneValue2 > mic2constant) {
+    //one light
+    if (MicrophoneValue2 >= (mic2constant + 2) && MicrophoneValue2 < (mic2constant + 18)) {
+      digitalWrite(Led1, HIGH);
+      delay(10);
+    }
+    else {
+
+      //two lights
+      if (MicrophoneValue2 >= (mic2constant + 18) && MicrophoneValue2 < (mic2constant + 40)) {
+        digitalWrite(Led1, HIGH);
+        digitalWrite(Led2, HIGH);
+        delay(10);
+      }
+      else {
+
+        //all lights
+        if (MicrophoneValue2 >= (mic2constant + 40)) {
+          digitalWrite(Led1, HIGH);
+          digitalWrite(Led2, HIGH);
+          digitalWrite(Led3, HIGH);
+          delay(10);
+        }
+        else {
+          digitalWrite(Led1, LOW);
+          digitalWrite(Led2, LOW);
+          digitalWrite(Led3, LOW);
+          delay(10);
+
+        }
+      }
+    }
   }
+
   else {
+    //one light
+    if (MicrophoneValue2 <= (mic2constant - 2) && MicrophoneValue2 > (mic2constant - 18)) {
+      digitalWrite(Led1, HIGH);
+      delay(10);
+    }
+    else {
 
-    digitalWrite(Audio1Led3, LOW);
-  }
+      //two lights
+      if (MicrophoneValue2 <= (mic2constant - 18) && MicrophoneValue2 > (mic2constant - 40)) {
+        digitalWrite(Led1, HIGH);
+        digitalWrite(Led2, HIGH);
+        delay(10);
+      }
 
-  //three lights
-  if (MicrophoneValue1 > (mic1constant + 13)) {
-    digitalWrite(Audio1Led4, HIGH);
-    delay(10);
-  }
-  else {
-    digitalWrite(Audio1Led4, LOW);
-  }
+      else {
 
-  //all lights
-  if (MicrophoneValue1 > (mic1constant + 21)) {
-    digitalWrite(Audio1Led5, HIGH);
-    delay(10);
-  }
-  else {
-    digitalWrite(Audio1Led5, LOW);
-  }
+        //all lights
+        if (MicrophoneValue2 <= (mic2constant - 40)) {
+          digitalWrite(Led1, HIGH);
+          digitalWrite(Led2, HIGH);
+          digitalWrite(Led3, HIGH);
+          delay(10);
+        }
+        else {
+          digitalWrite(Led1, LOW);
+          digitalWrite(Led2, LOW);
+          digitalWrite(Led3, LOW);
+          delay(10);
 
-  //Second light (different method?)/////
-
-  if (MicrophoneValue2 < (mic2constant - 1)) {
-    digitalWrite(Audio2Led1, HIGH);
-    delay(10);
+        }
+      }
+    }
   }
-  else {
-    digitalWrite(Audio2Led1, LOW);
-  }
-
-  if (MicrophoneValue2 < (mic2constant - 3)) {
-    digitalWrite(Audio2Led2, HIGH);
-    delay(10);
-  }
-  else {
-
-    digitalWrite(Audio2Led2, LOW);
-  }
-
-  if (MicrophoneValue2 < (mic2constant - 5)) {
-    digitalWrite(Audio2Led3, HIGH);
-    delay(10);
-  }
-  else {
-
-    digitalWrite(Audio2Led3, LOW);
-  }
-
-  if (MicrophoneValue2 < (mic2constant - 10)) {
-    digitalWrite(Audio2Led4, HIGH);
-    delay(10);
-  }
-  else {
-    digitalWrite(Audio2Led4, LOW);
-
-  }
-
+  
 }
-
 
